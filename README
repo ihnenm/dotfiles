@@ -1,0 +1,5 @@
+This repo is a collection of some of my settings for vim, bash, mutt, etc.
+These files are changed fairly often and sometimes stuff will break so fair warning.
+Many of the settings are specific to my system to you might have to make adjustments
+if you will be using them on your system, I try to provide helpful comments where
+I can.
