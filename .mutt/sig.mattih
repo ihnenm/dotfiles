@@ -1,0 +1,5 @@
+#!/bin/sh
+
+cat ~/.signature
+fortune ~/.mutt/quotes/myquotes
+

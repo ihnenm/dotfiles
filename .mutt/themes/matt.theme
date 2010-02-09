@@ -1,0 +1,66 @@
+# vim: ft=muttrc
+# ----------------------------------------------------------------------#
+#                   256 Color Theme For Mutt                            #
+#                                                                       #
+#                   By: Matt Ihnen                                      #
+# ----------------------------------------------------------------------#
+
+# General
+color normal color251 default
+color error color196 default
+color markers color142 default
+color tilde color129 default
+color status brightcolor82 color20
+
+# Index
+color tree color124 default
+color indicator brightcolor233 color66
+color index color160 default ~D
+color index color82 default ~N
+color index color226 default ~F
+color index color241 default ~Q
+# Headers
+color hdrdefault color91 default
+color header color208 default "^Date:"
+color header color118 default "^From:"
+color header color183 default "^Subject:"
+color header color117 default "^To:"
+
+# gpg stuff
+color body color34 default "^gpg: Good signature from"
+color body color34 default "^gpg: Signature made.*"
+color body color196 default "^gpg: BAD signature.*"
+color body color202 default "^gpg: Can't check signature.*"
+#color body color142 default "^[-- BEGIN PGP SIGNED MESSAGE --]"
+#color body color142 default "^[-- BEGIN PGP SIGNATURE --]"
+#color body color142 default "^[-- END PGP SIGNED MESSAGE --]"
+#color body color142 default "^[-- END PGP SIGNATURE --]"
+#color body color142 default "^Version: GnuPG.*"
+#color body color142 default "^Comment: .*"
+#color body color142 default "^[[:alnum:]/\+=]+[[:space:]]+$"
+
+
+# Web links, protocols
+color body brightcolor21 default "(https?|ftps?|sftp|news|telnet|finger|ssh)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+"
+color body brightcolor21 default "www\\.[-.a-z0-9]+\\.[a-z][a-z][a-z]?([-_./~a-z0-9]+)?"
+color body brightcolor21 default "<URL:[^ ]*>"
+# Email addresses
+color body brightcolor160 default "mailto: *[^ ]+\(\\i?subject=[^ ]+\)?"
+color body brightcolor160 default "[-a-z_0-9.%$]+@[-a-z_0-9.]+\\.[-a-z][-a-z]+"
+# Phone Numbers:
+color body brightcolor160 default "1-[0-9]{3}[- ][-0-9]+ +ext.? [0-9]+"
+color body brightcolor160 default "(tele)?(cell|fax|fon|phone|tel)[.: ]+[+]?[- 0-9/()]{4,}[0-9]"
+# Various smilies and the like
+color body brightgreen black "<[Gg]>"                            # <g>
+color body brightgreen black "<[Bb][Gg]>"                        # <bg>
+color body brightgreen black " [;:]-*[)>(<|]"                    # :-) etc...
+color body brightblue  black "(^|[[:space:]])\\*[^[:space:]]+\\*([[:space:]]|$)" # *Bold* text.
+color body brightblue  black "(^|[[:space:]])_[^[:space:]]+_([[:space:]]|$)"     # _Underlined_ text.
+color body brightblue  black "(^|[[:space:]])/[^[:space:]]+/([[:space:]]|$)"     # /Italic/ text.
+
+# Body
+color attachment color226 default
+color signature color251 default
+
+# quote levels
+color quoted color244 default

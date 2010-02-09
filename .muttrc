@@ -1,0 +1,232 @@
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+#                                                                           #
+#                         Matt Ihnen's personal .muttrc                     #
+#                                                                           #
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+
+
+# - - - - - - - - - Mail Folder and Account Settings  - - - - - - - - - - - - 
+
+set from="ihnenm@gmatc.matc.edu"
+set use_from=yes
+set envelope_from=yes
+set realname="Matt Ihnen"
+set sendmail="/usr/bin/msmtp"
+
+set folder=~/mail/mailboxes		# where i keep my mailboxes
+set mbox_type=mbox
+set mbox=+mbox			# where to store read messages
+set spoolfile=+inbox
+set record=+sent		# default location to save outgoing mail
+set postponed=+drafts	# mailbox to store postponed messages in
+set signature="~/.mutt/sig.mattih|"	# file which contains my signature
+set header_cache=~/mail/header_cache
+mailboxes `echo ~/mail/mailboxes/*`
+
+# - - - - - - - - - - - - General Settings  - - - - - - - - - - - - - - - -
+
+alternative_order text/plain text/html  # prefer text over html
+push <show-version>                     # show version at startup
+
+set editor="vim +':set textwidth=77' +':set wrap' +':set ft=mail' +':set spell' +'/^$'" 
+set index_format="%4C %Z %?X?%X& ? %{%m/%d/%Y} %-25.25F (%4c) %s"   # format of the index
+set status_format="-%r-Mutt: %f [Msgs:%?M?%M/?%m%?n? New:%n?%?d? Del:%d?%?F? Flag:%F?%?t? Tag:%t?%?p? Post:%p?%?b? Inc:%b?  %l]---(%s)-%>-(%P)---"
+set pager_format="-%S- %-20.20f %s"	# format of the pager status bar
+
+set abort_unmodified=yes	        # automatically abort replies if I don't change the message
+set attribution="On %d, %n wrote:"	# how to attribute replies
+set autoedit			            # go to the editor right away when composing
+set charset="utf-8"	                # character set for your terminal
+set move=no                         # Stop asking to move read messages!
+set copy=yes			            # always save a copy of outgoing messages
+set delete=yes			            # purge deleted messages without asking
+set edit_headers		            # let me edit the message header when composing
+set help			                # show the help lines
+set history=40			            # number of lines of history to remember
+set include			                # always include messages when replying
+set indent_string="> "		        # how to quote replied text
+set mailcap_path="/etc/mailcap"
+set nomark_old			            # i don't care about whether a message is old
+set mail_check=10		            # how often to poll for new mail
+#set menu_scroll		            # no implicit next-page/prev-page
+set mime_forward		            # use message/rfc822 type to forward messages
+set pager_context=3		            # no. of lines of context to give when scrolling
+set pager_index_lines=6		        # how many index lines to show in the pager
+set post_indent_string='---end quoted text---'
+#set print_command="enscript --pretty-print -G -p - | lp -d PDF"
+set print_command="muttprint"
+set noprompt_after	                # ask me for a command after the external pager exits
+set quote_regexp="^([A-Za-z ]+>|[]%>:|}-][]>:|}-]*)"
+set reply_regexp='^((re(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*'
+set read_inc=25			            # show progress when reading a mailbox
+set recall			                # prompt to recall postponed messages
+set reply_to			            # always use reply-to if present
+set reverse_name		            # use my address as it appears in the message i am replying to
+set nosave_empty		            # remove files when no messages are left
+set shell="/bin/bash"		        # program to use for shell escapes
+set sort=threads		            # primary sorting method
+set sort_aux=reverse-date
+set sort_browser=reverse-date	    # how to sort files in the dir browser
+set tilde			                # virtual lines to pad blank lines in the pager
+set nouse_domain		            # don't qualify local addresses with $domain
+set implicit_autoview=yes	        # pager shows parts having a mailcap viewer
+set visual=vim			            # editor invoked by ~v in the builtin editor
+set write_inc=25		            # show progress while writing mailboxes
+set quit=ask-yes                    # ask before quitting, default to yes
+set nobeep                          # don't need my computer beeping at me
+set sig_dashes=no                   # no -- dashes before sig
+set query_command = "abook --mutt-query '%s'"
+
+# Header fields I don't normally want to see
+ignore *		                    # this means "ignore all lines by default"
+unignore From: To: Reply-To: Mail-Followup-To: Subject: Date: Organization: CC: BCC: \
+         X-Mailer: X-Url: User-Agent: 
+
+# - - - - - - - - - - - - - Colors - - - - - - - - - - - - - - - - - - - - -
+
+color normal     white default
+color attachment brightyellow default
+color hdrdefault cyan default
+color indicator  brightwhite cyan
+color markers    brightred default
+color quoted     green default
+color signature  cyan default
+color status     brightgreen blue
+color tilde      blue default
+color tree       red default
+color header     brightgreen default ^From:
+color header     brightcyan default ^To:
+color header     brightcyan default ^Reply-To:
+color header     brightcyan default ^Cc:
+color header     brightblue default ^Subject:
+color body       brightred default [\-\.+_a-zA-Z0-9]+@[\-\.a-zA-Z0-9]+
+color body       brightblue default (https?|ftp)://[\-\.,/%~_:?&=\#a-zA-Z0-9]+
+
+color index      brightgreen default ~N
+color index      brightred default ~D
+
+# - - - - - - - - - - - - - - - Key Binding - - - - - - - - - - - - - - - -
+#	maps:
+#		alias		alias menu
+#		attach		attachment menu
+#		browser		directory browser
+#		compose		compose menu
+#		index		message index
+#		pgp		pgp menu
+#		postpone	postponed message recall menu
+#		generic		generic keymap for all of the above
+#		editor		line editor
+#		pager		text viewer
+#		
+
+bind generic { top-page
+bind generic } bottom-page
+bind generic \177 last-entry
+
+macro generic,index,pager \ca "<shell-escape>abook<return>" "launch abook"
+macro index,pager A "<pipe-message>abook --add-email<return>" "add the sender address to abook"
+macro index \cb "<pipe-message> urlview<Enter>"	# simulate the old browse-url function
+macro index G "!fetchmail -f /home/mattih/.fetchmailrc\n" "invoke fetchmail"
+macro pager G "!fetchmail -f /home/mattih/.fetchmailrc\n" "invoke fetchmail"
+macro generic "<esc>1" ":set from=ihnenm@gmatc.matc.edu"
+macro generic "<esc>2" ":set from=matt@blackburnaudio.com"
+macro generic <f1> "!elinks /usr/share/doc/mutt/html/manual.html\n" "Show Mutt documentation"
+macro generic <f2> ":source ~/.mutt/themes/matt.theme" "Load 256 Color Theme"
+# - - - - - - - - - - - - - - - Message Hooks - - - - - - - - - - - - - - -
+
+# Outlook Chokes on signature.asc
+# if you want to sign with inline use set pgp_create_traditional=yes
+# instead of pgp_autosign=no
+reply-hook "~h 'Outlook Express'" set pgp_autosign = no
+reply-hook . set pgp_autosign = yes
+
+# - - - - - - - - - - - - - - - GnuPG Stuff - - - - - - - - - - - - - - - -
+
+set pgp_decode_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="/usr/lib/mutt/pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="/usr/lib/mutt/pgpewrap gpg %?p?--passphrase-fd 0? --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --list-secret-keys %r"
+set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
+
+#set pgp_autosign=yes
+set pgp_replyencrypt=yes
+set pgp_replysign=yes
+set pgp_replysignencrypted=yes
+set pgp_timeout=0                #don't cache password, I use gpg-agent instead
+set pgp_verify_sig=yes
+set pgp_sign_as=0xB9F51B67
+
+# - - - - - - - - - - - - - - - - Aliases - - - - - - - - - - - - - - - - -
+#	alias <name> <address> [ , <address> ... ]
+
+alias me Matt Ihnen <ihnenm@gmatc.matc.edu> # me!
+
+# - - - - - - - - - - - - - Display Message Headers - - - - - - - - - - - -
+
+unhdr_order *				# forget the previous settings
+hdr_order date from subject to cc
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Automatically use entries from ~/.mailcap to view these MIME types
+
+auto_view application/x-gunzip
+auto_view application/x-gzip
+auto_view text/html
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Specify default filename when saving messages
+#
+#	save-hook [!]<pattern> <mailbox>
+#
+# <mailbox> is provided as default when saving messages from <pattern>
+
+#save-hook mutt- =mutt-mail
+#save-hook aol\\.com$ +spam
+#save-hook ^judge +diplomacy
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Multiple spool mailboxes
+#
+#	mbox-hook [!]<pattern> <mbox-mailbox>
+#
+# Read mail in <pattern> is moved to <mbox-mailbox> when <pattern> is
+# closed.
+
+#mbox-hook =mutt-users.in =mutt-users
+#mbox-hook +TEST +inbox
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Change settings based upon message recipient
+#
+#	send-hook [!]<pattern> <command>
+#
+# <command> is executed when sending mail to an address matching <pattern>
+
+#send-hook mutt- 'set signature=~/.sigmutt; my_hdr From: Mutt User <user@example.com>'
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Change settings based on mailbox
+#
+#	folder-hook [!]<pattern> <command>
+#
+# <command> is executed when opening a mailbox matching <pattern>
+
+#folder-hook .		'set sort=date-sent'
+#folder-hook mutt	'set index_format="%4C %Z %02m/%02N %-20.20F (%4l) %s"'
+#folder-hook =mutt	my_hdr Revolution: \#9 # real comment
+
+#folder-hook .		'set reply_regexp="^re:[ \t]*"'
+
+# EOF
